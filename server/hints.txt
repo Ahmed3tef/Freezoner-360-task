@@ -1,0 +1,343 @@
+populate بتبعت كويري زيادة للداتا بيز يعني بتبعت ركوست زيادة 
+ودا بيعمل حمل زيادة ع الداتا بيز لو البروجكت كبير 
+ف الافضل انك لو مش محتاها متعملهاش 
+
+populate({ path: 'category', select: 'name' });
+path => بتختار الحاجة اللي عبارة عن اوبجكت اي دي ف الداتا بيز عشان تحول الداتا بتاعته 
+
+select => 'name color size -_id'
+دي انت بتختار الفيلدز اللي  انت محتاجها بس ف الاوبجكت اللي انت اختارته
+بين كل حاجة والتانية مسافة بس 
+ولو انا مش عايز ال اي دي بعمله داش عشان مجيبوش 
+
+
+/////
+
+to get all subCategories in category:
+
+route should be: 
+GET api/categories/:categoryId/subCategories 
+ودا باترن المفروض تمشي عليه 
+
+عشان نقدر نعمل حاجة زي دي المفروض هنعملها بالنستد راوتس 
+
+1- هتروح ف الراوت الاول وتعمل الاتي 
+
+import subCategoryRoutes from './subCategory.js';
+router.use('/:categoryId/subcategories', subCategoryRoutes);
+
+2- هتروح ف الراوتر بتاع الحاجة اللي انت عايز ترجعها وهنا ف المثال بتاعنا هي الفئات الفرعية 
+ 
+1- const router = Router({mergeParams: true});
+بدل ما كان فاضي بتديله الاوبشن دا عشان تقوله لو في اي بارامز جاية من راوت قبل دا ف انا عايزه منه 
+ودا عشان نقدر ناخد الاي دي بتاع الفئة الرئيسية 
+
+2- دلوقتي الراوت التاني دا لما هيدخل هيكون داخل علي الراوت الاساسي اللي هو / بس 
+
+ف الهاندل بتاعه هيكون ف الكنترولر اللي علي البيز
+
+1- const {categoryId} = req.params;
+2- const filterObj = {};
+
+ if (categoryId) filterObj = { category: categoryId };
+
+  const subCategories = await SubCategoryModel.find({ filterObj })
+
+
+
+او الطريقة التانية انك تجيبها من الكويري اللي انت بتمرره ل الركوست وتديله ال cat id 
+
+////////
+
+sorting 
+
+1- انت بتديله اسم الفيلد اللي انت عايز ترتب بيه 
+لو انت اديته الاسم بس هيرتب تصاعدي 
+لو اديته -الاسم هيرتب تنازلي 
+
+2- لو عايز تعمل ترتيب باكتر من اوبشن زي السعر و الكمية مثلا 
+المفروض شكل الركوست هيكون كدا 
+sort=-price,quantity
+
+هيكون قيمتهم ف الكويري سورت كدا 
+
+'-price,quantity' احنا محتاجين نخلي مفيش كوما و في مسافة بينهم ف هنعمل سبليت و جوين
+
+/////////
+
+upload files
+============
+1- npm i multer 
+
+2- go to any router file and import multer then create an upload middleware from it 
+
+import multer from 'multer';
+
+// define the destination folder for the uploaded files.
+
+const upload = multer({
+  dest: 'uploads/categories',
+});
+بيبص ع الجلوبال وبيعمل الفولدر هناك والجلوبال هو اللي جنب ال app.js
+
+هنروح ع الكرييت ميدلوير و نحطه قبل اي ميدلوير تاني بعد الراوت علي طول 
+
+router.post('/create', upload.single('image'), createCategoryValidation, createCategory);
+
+هنستخدم single لو عنصر واحد و هنستخدم array لو اكتر من عنصر زي array of images علي حسب اللي مبعوت فالفورم داتا
+
+and this was the hello world for multer uploading images.
+
+/////////////////
+ودي طريقة حفظ الصور ف السرفر عندي 
+
+const multerStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '/uploads/categories');
+    الاول هو الايرور والتاني هو الباث اللي هحفظ فيه الداتا اللي جاية ع الميدل وير دي 
+  },
+  filename: function (req, file, cb) {
+    دي الطريقة اللي بعرف بيها الاكستنشن بتاعة الفايل اللي جايلي 
+    const ext = file.mimetype.split('/')[1];
+    const fileName = `category-${uuid4}-${Date.now()}.${ext}`;
+
+    cb(null, fileName);
+  },
+});
+
+طبعا لازم نعمل فلتر للحاجات ا للي جاية عشان انا اكيد مش هقبل كل الملفات اللي هتيجي 
+انا مثلا عايز صور وعايز اكستنشنز معينة بس 
+
+const multerFilter = (req, file, cb) => {
+  هنا انا بشيك ع الصور بس
+  if (file.mimetype.startsWith('image')) {
+    // cb is like next in express, first arg is the error second is response
+    cb(null, true);
+  } else {
+    cb(new ApiError('only images are allowed', 400), false);
+  }
+};
+
+هنا اخير بنكريت الميدلوير اللي هنعمل بيه كل اللي فات دا ونربطهم ببعض
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
+
+export const createCategoryImage = upload.single('image');
+
+ودا اخر حاجة الميثود دي هي اللي بقدر بيها اعمل الهندلة بتاع اللي فات 
+انا هاخد بقا الميدلوير اللي انا عملتها دي وهحطها قبل الميدلويرز التانية اللي عندي ف نفس الباث دا 
+
+/////////
+
+طب لو انا عايز اتحكم ف حجم الصور واخليها اصغر وكدا 
+هنستخدم مكتبة اسمها sharp 
+بنستخدمها مع multer عشان نتحكم ف حاجات كتير ف خصائص الصورة 
+
+الفكرة ف المكتبة دي انها مبتقبلش غير بافرز buffers
+
+1- npm i sharp
+
+2- go to controller file and config your settings:
+
+//  memory storage (makes a buffer)
+const multerStorage = multer.memoryStorage(); 
+دي هترجع الملف علي هيئة بفر ودا هو دورها 
+هي هتخزن الداتا مؤثتا فالميموري اللي هي الرام
+ و بعدين اما نعمل العمليات بتاعتنا هنوديها ع الملف بتاعنا عادي 
+
+const multerFilter = (req, file, cb) => {
+  دي كل دورها انها تشيك  ع نوع الدخل
+  if (file.mimetype.startsWith('image')) {
+    // cb is like next in express, first arg is the error second is response
+    cb(null, true);
+  } else {
+    cb(new ApiError('only images are allowed', 400), false);
+  }
+};
+
+const upload = multer({
+  storage: multerStorage, هنعرف المساحة اللي هخزن فيها هنا 
+  fileFilter: multerFilter,
+});
+export const createCategoryImage = upload.single('image');
+
+export const resizeCategoryImage = asyncHandler(async (req, res, next) => {
+  دا المهم بقا الميدل وير دي 
+  هنحطها بعد الميدل وير بتاعة الابلود ف الترتيب اللي ف الراوتس 
+
+  const fileName = `${uuid4()}-${Date.now()}.jpeg`;
+  انا حاططها هنا jpeg عشان احنا مقررين ان الصور كلها هتكون من النوع دا 
+
+  await sharp(req.file.buffer) هو هنا بياخد بفر والفايل بقا فيه بفر بعد مانا عملته ميموري ستوردج فوق
+    .resize(600, 600) دي بقدر اغير منها ابعاد الصورة وهي بتقص مبتغيرش مساحة وتبوظ الصورة
+    .toFormat('jpeg') دي الفورمات اللي اختارناهالانواع الصور اللي هتكون عندنا 
+    .jpeg({ quality: 95 }) بقوله الصور الجيبج خلي الجودة بتاعتها 95 ف المية
+    .toFile(`uploads/categories/${fileName}`); هنا بقوله يحفظ البفر دا ف الفايل دا لكن فوق كنت بقوله احفظ الملف ف الفولدر لكن هنا انا بمرر الاسم والداتا للملف 
+
+  req.body.image = fileName;
+  بعد كدا بحفظ الصورة ف الركوست بدي عشان تتحط ف الداتا بيز 
+
+  next();
+});
+
+// path.resolve() === __dirname in CommonJS
+
+////
+لو هنرفع صورة واحدة هنستخدم 
+upload.single(fileName);
+
+لو هنرفع اكتر من صورة والسكيما بتاعتنا فيها  اراي بس للصور مفيش اي فيلدز تانية هتاخد صور بنستخدم 
+
+upload.array('images'); takes the file name
+
+لو عايزين نرفع بس الركوست بتاعنا فيه اكتر من حاجة فايل لفيلدز مختلفة ف احنا هنستخدم 
+
+upload.fields([{name: 'image', maxCount: 1},{name: 'images', maxCount: 4}]); 
+
+
+////
+
+Auth 
+===
+
+سكيما اليوزر هيكون ليها 2 كترولر 
+
+1- one to handle the crud operations (only the admin can do this)
+2- to handle Auth (login, signup, forget password, reset password, logout)
+
+///
+
+hash password 
+
+// this hashes the password before saving it to database.
+// we must use function declaration to use this keyword.
+
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+
+  this.password = await bcrypt.hash(this.password, 12);
+  next();
+});
+
+/// 
+
+لما هتعمل ابديت لبيانات اليوزر هتفصل ابديت الداتا عن ابديت الباسورد 
+
+شوف الفاليديشن و الراوتس بتاعة اليوزر والباسورد 
+
+////
+
+AUTH WITH JWT
+
+1- المفروض السيكرت ف كل مشروع يكون مختلف عن اللي قبله 
+2- المفروض طول السيكرت دا ميقلش عن 30 حرف 
+3- هتحدد الاكسبيرشن بتاع التوكن ف الكونفج بردو 
+
+دي طريقة صنع التوكن 
+ const token = jwt.sign(
+    {
+      id: user._id,
+       لاوزم بديله الاي دي بتاع اليوزر 
+    },
+    process.env.JWT_SECRET, 
+    بديله سيكرت كي لازم 
+    {
+      expiresIn: process.env.JWT_SECRET_EXPIRATION, 
+      ودا اوبشنال وهنا بديله تايم لانتهاء التوكن
+
+    }
+  );
+
+/////
+
+forget password cycle: 
+1- send reset code to email you get from req.body
+2- verify the code that was sent to email. 
+3- set the new password.
+
+
+////
+
+send emails using nodemailer
+
+1- npm i nodemailer 
+
+use mailTrap to send emails.
+
+//////////
+
+to make average rating and rating quantity we will use aggrigate()
+
+1- اول حاجة هنعمل الفنكشن اللي هتعملنا اللوجك دا وهنستخدم فيها اجريجيت وهتكون بالشكل دا 
+
+reviewSchema.statics.createAverageRatingAndQuantity = async function (
+  productId
+) {
+  // اجريجيت دي شغالة علي انها بتدخل النتايج بتاعتنا علي اكتر من مرحلة ورا بعض بالترتيب وكل مرحلة بتاخد النتيجة بتاعة المرحلة اللي قبلها وبتعمل عليها العمليات بتاعتها وهكذا
+
+  const result = await this.aggregate([
+    // stage 1 : get all reviews in specific product
+    { $match: { product: productId } },
+    // stage 2 : group reviews in based on specific product and calc avgRating and ratingQuantity
+    {
+      $group: {
+        _id: 'product',
+        averageRating: { $avg: '$rating' },
+        ratingsQuantity: { $sum: 1 },
+      },
+    },
+  ]);
+  if (result.length > 0) {
+    await ProductModel.findByIdAndUpdate(productId, {
+      avgRating: result[0].averageRating,
+      ratings: result[0].ratingsQuantity,
+    });
+  } 
+};
+
+بعد كدا بنقول قبل ما نحفظ الداتا ف احنا هنعمل الكلام دا 
+
+reviewSchema.post('save', async function (next) {
+  // بمرر ال productId اللي موجود ف الريفيو نفسه بتاع البرودكت
+  await this.constructor.createAverageRatingAndQuantity(this.product);
+  
+});
+
+
+2- هنعمل العمليات دي قبل ما نحفظ الداتا ف الداتابيز وهنمرر ال productId من الريفيو مودل نفسه 
+
+reviewSchema.post('save', async function (next) {
+  // بمرر ال productId اللي موجود ف الريفيو نفسه بتاع البرودكت 
+  await this.constructor.createAverageRatingAndQuantity(this.product);
+ 
+});
+
+
+3- عايزين نعمل كدا لما نعمل ابديت .. للاسف مفيش حاجة بتعمل لسن علي الابديت ف احنا هنروح نعمل 
+document.save()
+ف الفنكشن اللي بنعمل فيها ابديت قبل ما نعمل الريترن وبكدا هنبقا عملنا ترجر علي الابديت 
+
+
+4- عايزين نعمل كدا بردو لو اي يوزر مسح ريفيو
+
+reviewSchema.post('remove', async function (next) {
+  // بمرر ال productId اللي موجود ف الريفيو نفسه بتاع البرودكت
+  await this.constructor.createAverageRatingAndQuantity(this.product);
+
+});
+
+
+/////////////////// payment /////////////////////
+
+STRIPE_PUBLIC=pk_test_51MQVfVFRb07u30EJmynW92vyUhFwDFaZeLvqMrZuMwudr4EtyELsIGvD9xeDO5XMBHq6q8G3ND1mWkmWO0GSJsO200TkmP7cC6
+
+STRIPE_SECRET=sk_test_51MQVfVFRb07u30EJFAae0mKoyPELyUQiW40bb4wkfZAQpbx58HkXK6Wn6uSEZAmFgg2jAPcijiOuT6JCZ09QpKDm00YDThz8jw
+
+
+//////////
+
+// To remove data using these defaults: عشان لو جاي داتا علي اساس انه اوبجكت او مونجو اوبريتور ف دا هيبوظ الدنيا وممكن يخلي الهاكر يدخل علي اي ايميل بيماتش مع الباسورد مثلا
+app.use(mongoSanitize());

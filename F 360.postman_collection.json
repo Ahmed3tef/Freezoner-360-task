@@ -1,0 +1,405 @@
+{
+	"info": {
+		"_postman_id": "54d07db3-b66b-4c0e-ab33-189504cf7ed1",
+		"name": "F 360",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18282574"
+	},
+	"item": [
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "all categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{main_url}}categories?page=1&limit=5",
+							"host": [
+								"{{main_url}}categories"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "ssssss",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/godof/Desktop/71a3cNgpmCL.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{main_url}}categories/create",
+							"host": [
+								"{{main_url}}categories"
+							],
+							"path": [
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "one category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{main_url}}categories/one/63b0b435467416db81a168c9",
+							"host": [
+								"{{main_url}}categories"
+							],
+							"path": [
+								"one",
+								"63b0b435467416db81a168c9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update category",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "soso",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{main_url}}categories/one/63b339c510afeceec69e40b2",
+							"host": [
+								"{{main_url}}categories"
+							],
+							"path": [
+								"one",
+								"63b339c510afeceec69e40b2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{main_url}}categories/one/63a78b381d09beebcbd61372",
+							"host": [
+								"{{main_url}}categories"
+							],
+							"path": [
+								"one",
+								"63a78b381d09beebcbd61372"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Suggestions",
+			"item": [
+				{
+					"name": "catergory suggestions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{main_url}}categories?page=1&limit=5",
+							"host": [
+								"{{main_url}}categories"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "ssssss",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/godof/Desktop/71a3cNgpmCL.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{main_url}}categories/create",
+							"host": [
+								"{{main_url}}categories"
+							],
+							"path": [
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{main_url}}categories/one/63a78b381d09beebcbd61372",
+							"host": [
+								"{{main_url}}categories"
+							],
+							"path": [
+								"one",
+								"63a78b381d09beebcbd61372"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "References",
+			"item": [
+				{
+					"name": "category references",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{main_url}}categories/63e4e77a9853f222ae2af4ec/references?search=mah",
+							"host": [
+								"{{main_url}}categories"
+							],
+							"path": [
+								"63e4e77a9853f222ae2af4ec",
+								"references"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "mah"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "category references search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{main_url}}categories/63e4e77a9853f222ae2af4ec/references/search",
+							"host": [
+								"{{main_url}}categories"
+							],
+							"path": [
+								"63e4e77a9853f222ae2af4ec",
+								"references",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "first ref",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/godof/Desktop/71a3cNgpmCL.jpg"
+								},
+								{
+									"key": "description",
+									"value": "first ref desc",
+									"type": "text"
+								},
+								{
+									"key": "author",
+									"value": "frist ref author",
+									"type": "text"
+								},
+								{
+									"key": "reviewer",
+									"value": "frist ref reviewer",
+									"type": "text"
+								},
+								{
+									"key": "categoryId",
+									"value": "63e4e77a9853f222ae2af4ec",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{main_url}}references/create",
+							"host": [
+								"{{main_url}}references"
+							],
+							"path": [
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "one reference",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{main_url}}categories/one/63b0b435467416db81a168c9",
+							"host": [
+								"{{main_url}}categories"
+							],
+							"path": [
+								"one",
+								"63b0b435467416db81a168c9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update reference",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "soso",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{main_url}}categories/one/63b339c510afeceec69e40b2",
+							"host": [
+								"{{main_url}}categories"
+							],
+							"path": [
+								"one",
+								"63b339c510afeceec69e40b2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{main_url}}references/one/63e521831d5653f0e6369172",
+							"host": [
+								"{{main_url}}references"
+							],
+							"path": [
+								"one",
+								"63e521831d5653f0e6369172"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "main_url",
+			"value": "http://localhost:7000/",
+			"type": "string"
+		}
+	]
+}

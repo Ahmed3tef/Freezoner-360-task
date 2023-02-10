@@ -1,0 +1,22 @@
+import React from 'react'
+import { DateLine } from '..'
+
+const SuggestionCard = ({ data, categoryName }) => {
+
+
+  return (
+    <div className='suggestion-card'>
+      <div className="text">
+        <h3>{`"${data.title}" in "${categoryName}" Sent By "${data.employee}"`} </h3>
+        <DateLine title='Suggested on :' date={data.date} />
+      </div>
+      <div className="cta">
+        <button type="button" className="details">
+          View Details
+        </button>
+      </div>
+    </div>
+  )
+}
+
+export default SuggestionCard
