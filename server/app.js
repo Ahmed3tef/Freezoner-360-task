@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 // import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import ApiError from './utils/ApiError.js';
-import path from 'path';
+
 import { globalError } from './middlewares/error.js';
 import { dbConnection } from './utils/dbConnection.js';
 import { appRoutes } from './routes/index.js';
@@ -39,8 +39,9 @@ app.use(xss()); // to clean request inputs from any html content
 
 app.use(hpp({ whitelist: ['price', 'avgRating', 'ratings', 'quantity'] })); // <- عشان لو جاي اكتر  من قيمة لنفس الحاجة ف الكويري او البادي او اي حتة ياخد بس اخر قيمة مياخدهمش الاتنين
 
-// path.resolve() === __dirname in CommonJS
-app.use(express.static(path.join(path.resolve(), 'uploads')));
+// this for our served files
+
+app.use('/uploads',express.static('uploads'));
 
 // env vars
 const PORT = process.env.PORT || 5000;
@@ -55,6 +56,7 @@ app.use('/auth', limiter);
 
 // app routes
 appRoutes(app);
+
 // route doesn't match
 app.all('*', (req, res, next) => {
   next(new ApiError(`Can't find this route: ${req.originalUrl}`));
@@ -67,7 +69,6 @@ app.use(globalError);
 dbConnection();
 
 // start server
-
 const server = app.listen(PORT, () =>
   console.log('App is running on port: ' + PORT)
 );

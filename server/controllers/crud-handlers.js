@@ -4,6 +4,7 @@ import ApiError from '../utils/ApiError.js';
 import ApiFeatures from '../utils/apiFeatures.js';
 import fs from 'fs';
 
+
 // getAll
 export const getAllHandler = (Model, modelName) =>
   asyncHandler(async (req, res, next) => {
@@ -17,7 +18,7 @@ export const getAllHandler = (Model, modelName) =>
       // .search();
 
     const documents = await apiFeatures.mongooseQuery;
-    console.log(documents);
+
     if (!documents) return next(new ApiError(`No ${modelName} found`));
 
     res.status(200).json({ status: 'success', data: documents });
