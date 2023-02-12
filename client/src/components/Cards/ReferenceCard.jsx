@@ -3,8 +3,9 @@ import { useDispatch } from 'react-redux';
 import { deleteReferences } from '../../store/reducers/references';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { loadCategory } from '../../store/reducers/category';
-import { APIBase } from '../../store/reducers/api';
-
+import recycleIcon from '../../assets/images/recycle.svg';
+import eyeIcon from '../../assets/images/eye.svg';
+import penIcon from '../../assets/images/pen.svg';
 const ReferenceCard = ({ data }) => {
 
   const dispatch = useDispatch()
@@ -43,15 +44,18 @@ const ReferenceCard = ({ data }) => {
       </div>
       <div className="cta">
         <button type="button" className="details">
+          <img src={eyeIcon} alt="eye-icon" />
           <a href={data.file} target="_blank"
             rel="noreferrer">
             preview
           </a>
         </button>
-        <button type="button" className="details">
+        <button type="button" className="btn-alt-green">
+          <img src={penIcon} alt="eye-icon" />
           Edit
         </button>
         <button type="button" className="btn-delete" onClick={deleteHandler}>
+          <img src={recycleIcon} alt="eye-icon" />
           Delete
         </button>
       </div>

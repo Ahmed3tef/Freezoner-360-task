@@ -107,7 +107,7 @@ const ReferenceForm = () => {
 
         </div>
 
-        <div className='form__input-container justify-end'>
+        <div className='form__input-container flex-center'>
 
           <input type='file' name='file' className="mb-[3rem]" onChange={(e) => setFile(e.target.files[0])} label='Employee name' required={true} />
 

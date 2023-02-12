@@ -67,8 +67,11 @@ export const deleteReference = deleteHandler(ReferenceModel, 'Reference');
 // get all References with search 
 export const getSearchReferences = asyncHandler(async (req, res, next) => {
   // i need to select category to search in
+  const { categoryId } = req.params
+  console.log(categoryId)
   const { keyword } = req.query
   ReferenceModel.find({
+    categoryId,
    $or: [
         { title: { "$regex": keyword, "$options": 'i' } },
         { description: { "$regex": keyword, "$options": 'i' } },

@@ -44,6 +44,7 @@ const MiniText = props => {
             onChange={handleInputChange}
             onBlur={props.onBlur}
             name={props.inputName}
+            onKeyDown={props.onKeyDown}
           />
           {props.error && <p className='input-error'>{props.error}</p>}
         </div>

@@ -14,6 +14,10 @@ export const loadReferences = createAsyncThunk(
   'references/loadReferences',
   (data, thunkAPI) => getDataWithParams(thunkAPI, `categories/${data.categoryId}/references`)
 );
+export const loadSearchReferences = createAsyncThunk(
+  'references/loadSearchReferences',
+  (data, thunkAPI) => getDataWithParams(thunkAPI, `categories/${data.categoryId}/references/search`, data.params)
+);
 
 export const deleteReferences = createAsyncThunk(
   'references/deleteReferences',
@@ -52,6 +56,31 @@ export const referencesSlice = createSlice({
         }
       })
       .addCase(loadReferences.rejected, (state, action) => {
+        state.isLoading = false;
+        state.references = null;
+        state.error = action.payload;
+      });
+    builder
+      .addCase(loadSearchReferences.pending, (state, action) => {
+        state.references = null;
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(loadSearchReferences.fulfilled, (state, { payload }) => {
+        if (payload) {
+          if (payload.status !== 'success') {
+            state.references = null;
+            state.isLoading = false;
+            state.error = payload.message;
+            return;
+          }
+
+          state.references = payload.data;
+          state.isLoading = false;
+          state.error = null;
+        }
+      })
+      .addCase(loadSearchReferences.rejected, (state, action) => {
         state.isLoading = false;
         state.references = null;
         state.error = action.payload;
