@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import {
   addSuggestion,
+  getCategorySuggestion,
   getCategorySuggestions,
   removeSuggestion,
 } from '../../controllers/references/suggestion.js';
@@ -10,6 +11,7 @@ import {
   createSuggestionValidation,
   deleteSuggestionValidation,
   getCategorySuggestionValidation,
+  getSuggestionValidation,
 } from '../../utils/validations/references/suggestion.js';
 
 const router = Router();
@@ -22,6 +24,7 @@ router.route('/').get(getCategorySuggestionValidation, getCategorySuggestions);
 
 router.post('/create', createSuggestionValidation, addSuggestion);
 
+router.get('/:suggestionId', getSuggestionValidation, getCategorySuggestion);
 // should be delteted only by admin or user
 router.delete('/:suggestionId', deleteSuggestionValidation, removeSuggestion);
 

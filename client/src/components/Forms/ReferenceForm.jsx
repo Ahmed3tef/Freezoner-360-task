@@ -1,40 +1,58 @@
-import React, { useState } from 'react'
-import { LargeText, MiniText } from '..'
+import React, { useEffect, useState } from 'react'
+import { ErrorCard, LargeText, MiniText, Spinner } from '..'
 import { unwrapResult } from '@reduxjs/toolkit';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 // import { loginUser } from '../../store/reducers/auth';
 
 // import './_forms.scss';
 import { useFormik } from 'formik';
 import * as YUP from 'yup';
 import { createReference } from '../../store/reducers/references';
+import { loadReference } from '../../store/reducers/reference';
 
 
 const ReferenceForm = () => {
 
+  const { id } = useParams()
+
+
   const location = useLocation();
   const [file, setFile] = useState('')
 
+  const [refState, setRefState] = useState()
 
+  const { reference, isLoading, error } = useSelector(state => state.reference)
 
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+
+
+  useEffect(() => {
+    if (id) dispatch(loadReference({ id }))
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    if (reference) setRefState(reference)
+  }, []);
+
+
+
   const formik = useFormik({
 
     initialValues: {
-      title: '',
-      description: '',
-      author: '',
-      reviewer: '',
-      referenceCode: '',
+      title: reference?.title ?? '',
+      description: reference?.description ?? '',
+      author: reference?.author ?? '',
+      reviewer: reference?.reviewer ?? '',
+      referenceCode: reference?.referenceCode ?? '',
 
     },
-    validateOnMount: true
-    ,
+    // validateOnMount: true,
+    enableReinitialize: true,
     validationSchema: YUP.object({
       title: YUP.string().required('title is required.').min(2, 'must be at least 2 characters'),
       description: YUP.string().required('description is required.').min(10, 'must be at least 10 characters'),
@@ -79,57 +97,119 @@ const ReferenceForm = () => {
   })
 
 
+
   return (
-    <div className='section p-[5rem] '>
-      <h2 className='section-title mb-[2rem]'>Add New Reference</h2>
+    <>
+      {id && isLoading && <Spinner />}
 
-      <form>
-        <div className='form__input-container'>
+      {id && !isLoading && !reference && error &&
+        <ErrorCard />
+      }
 
-          <MiniText name={formik.values.title} classes="mb-[3rem]" inputName='title' onBlur={formik.handleBlur} onChange={formik.handleChange} label='Title' error={formik.errors.title && formik.touched.title ? formik.errors.title : null} required={true} />
+      {/* no error no data */}
+      {id && !isLoading && !error && !reference && <ErrorCard message='Unexpected Error Happened.' />}
 
-        </div>
+      {id && !isLoading && !error && reference && <div className='section p-[5rem] '>
+        <h2 className='section-title mb-[2rem]'>Add New Reference</h2>
 
-        <div className='form__input-container'>
+        <form>
+          <div className='form__input-container'>
 
-          <MiniText name={formik.values.author} classes="mb-[3rem]" inputName='author' onBlur={formik.handleBlur} onChange={formik.handleChange} label='author name' error={formik.errors.author && formik.touched.author ? formik.errors.author : null} required={true} />
+            <MiniText name={formik.values.title} classes="mb-[3rem]" inputName='title' onBlur={formik.handleBlur} onChange={formik.handleChange} label='Title' error={formik.errors.title && formik.touched.title ? formik.errors.title : null} required={true} />
 
-        </div>
-        <div className='form__input-container'>
+          </div>
 
-          <MiniText name={formik.values.reviewer} classes="mb-[3rem]" inputName='reviewer' onBlur={formik.handleBlur} onChange={formik.handleChange} label='reviewer name' error={formik.errors.reviewer && formik.touched.reviewer ? formik.errors.reviewer : null} required={true} />
+          <div className='form__input-container'>
 
-        </div>
+            <MiniText name={formik.values.author} classes="mb-[3rem]" inputName='author' onBlur={formik.handleBlur} onChange={formik.handleChange} label='author name' error={formik.errors.author && formik.touched.author ? formik.errors.author : null} required={true} />
 
-        <div className='form__input-container'>
+          </div>
+          <div className='form__input-container'>
 
-          <MiniText name={formik.values.referenceCode} classes="mb-[3rem]" inputName='referenceCode' onBlur={formik.handleBlur} onChange={formik.handleChange} label='reference code' error={formik.errors.referenceCode && formik.touched.referenceCode ? formik.errors.referenceCode : null} required={true} />
+            <MiniText name={formik.values.reviewer} classes="mb-[3rem]" inputName='reviewer' onBlur={formik.handleBlur} onChange={formik.handleChange} label='reviewer name' error={formik.errors.reviewer && formik.touched.reviewer ? formik.errors.reviewer : null} required={true} />
 
-        </div>
+          </div>
 
-        <div className='form__input-container flex-center'>
+          <div className='form__input-container'>
 
-          <input type='file' name='file' className="mb-[3rem]" onChange={(e) => setFile(e.target.files[0])} label='Employee name' required={true} />
+            <MiniText name={formik.values.referenceCode} classes="mb-[3rem]" inputName='referenceCode' onBlur={formik.handleBlur} onChange={formik.handleChange} label='reference code' error={formik.errors.referenceCode && formik.touched.referenceCode ? formik.errors.referenceCode : null} required={true} />
 
-        </div>
-        <div className='form__input-container'>
+          </div>
 
-          <LargeText name={formik.values.description} classes="mb-[3rem]" inputName='description' onBlur={formik.handleBlur} onChange={formik.handleChange} label='Description' error={formik.errors.description && formik.touched.description ? formik.errors.description : null} required={true} />
+          <div className='form__input-container flex-center'>
 
-        </div>
+            <input type='file' name='file' className="mb-[3rem]" onChange={(e) => setFile(e.target.files[0])} label='Employee name' required={true} />
 
-        <div className="flex-center gap-[5rem]">
-          <button type="button" className="btn-delete" onClick={() => navigate(`/category/${location.state.categoryId}`)} >
-            Cancel
-          </button>
+          </div>
+          <div className='form__input-container'>
 
-          <button type="button" onClick={formik.handleSubmit} className="btn-green  px-[2rem] py-[.8rem]">
-            Save
-          </button>
+            <LargeText desc={formik.values.description} classes="mb-[3rem]" inputName='description' onBlur={formik.handleBlur} onChange={formik.handleChange} label='Description' error={formik.errors.description && formik.touched.description ? formik.errors.description : null} required={true} />
 
-        </div>
-      </form>
-    </div>
+          </div>
+
+          <div className="flex-center gap-[5rem]">
+            <button type="button" className="btn-delete" onClick={() => navigate(`/category/${location?.state?.categoryId ?? reference.categoryId}`)} >
+              Cancel
+            </button>
+
+            <button type="button" onClick={formik.handleSubmit} className="btn-green  px-[2rem] py-[.8rem]">
+              Save
+            </button>
+
+          </div>
+        </form>
+      </div>}
+      {!id && <div className='section p-[5rem] '>
+        <h2 className='section-title mb-[2rem]'>Add New Reference</h2>
+
+        <form>
+          <div className='form__input-container'>
+
+            <MiniText name={formik.values.title} classes="mb-[3rem]" inputName='title' onBlur={formik.handleBlur} onChange={formik.handleChange} label='Title' error={formik.errors.title && formik.touched.title ? formik.errors.title : null} required={true} />
+
+          </div>
+
+          <div className='form__input-container'>
+
+            <MiniText name={formik.values.author} classes="mb-[3rem]" inputName='author' onBlur={formik.handleBlur} onChange={formik.handleChange} label='author name' error={formik.errors.author && formik.touched.author ? formik.errors.author : null} required={true} />
+
+          </div>
+          <div className='form__input-container'>
+
+            <MiniText name={formik.values.reviewer} classes="mb-[3rem]" inputName='reviewer' onBlur={formik.handleBlur} onChange={formik.handleChange} label='reviewer name' error={formik.errors.reviewer && formik.touched.reviewer ? formik.errors.reviewer : null} required={true} />
+
+          </div>
+
+          <div className='form__input-container'>
+
+            <MiniText name={formik.values.referenceCode} classes="mb-[3rem]" inputName='referenceCode' onBlur={formik.handleBlur} onChange={formik.handleChange} label='reference code' error={formik.errors.referenceCode && formik.touched.referenceCode ? formik.errors.referenceCode : null} required={true} />
+
+          </div>
+
+          <div className='form__input-container flex-center'>
+
+            <input type='file' name='file' className="mb-[3rem]" onChange={(e) => setFile(e.target.files[0])} label='Employee name' required={true} />
+
+          </div>
+          <div className='form__input-container'>
+
+            <LargeText desc={formik.values.description} classes="mb-[3rem]" inputName='description' onBlur={formik.handleBlur} onChange={formik.handleChange} label='Description' error={formik.errors.description && formik.touched.description ? formik.errors.description : null} required={true} />
+
+          </div>
+
+          <div className="flex-center gap-[5rem]">
+            <button type="button" className="btn-delete" onClick={() => navigate(`/category/${location?.state?.categoryId ?? reference.categoryId}`)} >
+              Cancel
+            </button>
+
+            <button type="button" onClick={formik.handleSubmit} className="btn-green  px-[2rem] py-[.8rem]">
+              Add
+            </button>
+
+          </div>
+        </form>
+      </div>}
+    </>
   )
 }
 

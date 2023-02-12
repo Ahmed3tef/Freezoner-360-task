@@ -6,9 +6,13 @@ import { loadCategory } from '../../store/reducers/category';
 import recycleIcon from '../../assets/images/recycle.svg';
 import eyeIcon from '../../assets/images/eye.svg';
 import penIcon from '../../assets/images/pen.svg';
+import { useNavigate } from 'react-router-dom';
+
 const ReferenceCard = ({ data }) => {
 
   const dispatch = useDispatch()
+
+  const navigate = useNavigate()
 
   const finalDate = new Date(
     data.createdAt
@@ -16,7 +20,6 @@ const ReferenceCard = ({ data }) => {
     year: 'numeric',
     month: 'long',
     day: '2-digit',
-
     hour: 'numeric',
     hour12: true,
   });
@@ -50,7 +53,7 @@ const ReferenceCard = ({ data }) => {
             preview
           </a>
         </button>
-        <button type="button" className="btn-alt-green">
+        <button type="button" className="btn-alt-green" onClick={() => navigate(`/reference/${data._id}`)}>
           <img src={penIcon} alt="eye-icon" />
           Edit
         </button>

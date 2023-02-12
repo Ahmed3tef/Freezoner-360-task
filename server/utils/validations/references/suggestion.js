@@ -35,6 +35,7 @@ export const createSuggestionValidation = [
 
 export const getSuggestionValidation = [
   check('suggestionId').isMongoId().withMessage('Invalid Suggestion id format'),
+   check('categoryId').isMongoId().withMessage('Invalid Suggestion id format'),
   validationMiddleware,
 ];
 

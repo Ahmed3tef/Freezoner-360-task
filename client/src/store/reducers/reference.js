@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { deleteWithToast, getDataWithParams, postDataWithToast } from './loadData';
+import {  getDataWithParams } from './loadData';
 
 const initialState = {
   reference:{},
@@ -12,7 +12,7 @@ const initialState = {
 
 export const loadReference = createAsyncThunk(
   'reference/loadReference',
-  (data, thunkAPI) => getDataWithParams(thunkAPI, `categories/${data.categoryId}/reference`)
+  (data, thunkAPI) => getDataWithParams(thunkAPI, `references/one/${data.id}`)
 );
 
 
@@ -45,7 +45,7 @@ export const referenceSlice = createSlice({
       .addCase(loadReference.rejected, (state, action) => {
         state.isLoading = false;
         state.reference = null;
-        state.error = action.payload;
+        state.error = action?.payload;
       });
    
   },

@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler';
 
 import { ReferenceCategoryModel } from '../../models/references/category.js';
+import ApiError from '../../utils/ApiError.js';
 
 export const addSuggestion = asyncHandler(async (req, res, next) => {
   // $addToSet => add Suggestion to suggestions only if Suggestion does not exist.
@@ -40,7 +41,7 @@ export const removeSuggestion = asyncHandler(async (req, res, next) => {
 });
 
 export const getCategorySuggestions = asyncHandler(async (req, res, next) => {
-  // $pull => add Suggestion to suggestions only if Suggestion does not exist.
+
   const category = await ReferenceCategoryModel.findById(
     req.query.categoryId
   ).populate('suggestions');
@@ -49,5 +50,24 @@ export const getCategorySuggestions = asyncHandler(async (req, res, next) => {
     status: 'success',
     results: category.suggestions.length,
     data: category.suggestions,
+  });
+});
+
+export const getCategorySuggestion = asyncHandler(async (req, res, next) => {
+
+  const { suggestionId } = req.params;
+  
+  const category = await ReferenceCategoryModel.findById(
+    req.query.categoryId
+  ).populate('suggestions');
+
+  const suggestion = category?.suggestions?.find(suggestion => suggestion._id.toString() === suggestionId )
+
+
+  if(!suggestion) return next(new ApiError('Suggestion not found', 404))
+
+  res.status(200).json({
+    status: 'success',
+    data: suggestion,
   });
 });
