@@ -4,13 +4,13 @@ import { NavLink } from 'react-router-dom'
 
 const Sidebar = () => {
   return (
-    <aside className='searchbar'>
+    <aside className='sidebar'>
       <ul>
-        {sidebarData.map((e, i) => <li>
+        {sidebarData.map((e, i) => <li key={i}>
           <NavLink to={`/${e.link}`} className='nav-link' style={isActive => ({
-            backgroundColor: isActive ? "#2B564C" : "white",
-            color: isActive ? "white" : "#2B564C",
+            backgroundColor: isActive ? "#2B564C" : "#fff",
             fill: isActive ? "white" : "#2B564C",
+            color: isActive ? "white" : "#2B564C",
 
           })} >
             <img src={e.icon} alt={e.text} />

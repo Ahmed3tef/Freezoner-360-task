@@ -13,6 +13,7 @@ const Category = () => {
   const { category, isLoading, error } = useSelector(state => state.category)
 
   const { id } = useParams()
+  console.log(id);
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 

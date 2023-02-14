@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap');
+
+.navbar {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  height: 5.6rem;
+  padding: 0 1.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-navbar-bg);
+  z-index: 999;
+
+  &__container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  &__menuLogoContainer {
+    display: flex;
+    align-items: center;
+  }
+
+  &__menuIcon {
+    padding: 0.8rem;
+    // width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s;
+
+    & > * {
+      font-size: 2.5rem;
+    }
+
+    &:active {
+      background-color: var(--color-sidebar-item-hover);
+    }
+  }
+}
+.logo {
+  display: flex;
+  align-items: center;
+  padding: 1.8rem 1.4rem;
+  cursor: pointer;
+
+  &__img {
+    width: 2.9rem;
+    margin-right: 3px;
+    margin-bottom: -2px;
+  }
+  &__text {
+    font-family: 'Pathway Gothic One', 'Roboto', sans-serif;
+    font-size: 2.3rem;
+    font-weight: 600;
+    color: rgba(var(--color-white), 0.9);
+    // letter-spacing: 0.5px;
+  }
+}
+.searchBar {
+  display: flex;
+  width: 35%;
+  &__input {
+    background-color: var(--color-searchBar-bg);
+    border: 1px solid var(--color-searchBar-bt);
+    border-right: none;
+    border-radius: 2px 0 0 2px;
+    box-shadow: inset 0 1px 2px hsla(0, 0%, 0%, 0);
+    color: var(--color-searchBar-text);
+    padding: 2px 6px;
+    // margin-left: 3.4rem;
+    width: 100%;
+    outline: none;
+    font-size: 1.6rem;
+  }
+  &__searchIcon {
+    border: 1px solid;
+    border-color: var(--color-searchBar-bt);
+    background-color: var(--color-searchBar-bt);
+    box-shadow: 0 1px 0 rgb(0 0 0 / 10%);
+    border-radius: 0 2px 2px 0;
+    height: 4rem;
+    width: 7.5rem;
+  }
+  &__micIcon {
+    background-color: var(--color-body-bg);
+    margin-left: 1rem;
+  }
+}
+
+.contentContainer {
+  display: flex;
+}

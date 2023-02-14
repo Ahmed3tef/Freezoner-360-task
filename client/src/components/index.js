@@ -24,3 +24,6 @@ export { default as LargeText } from './Inputs/LargeText';
 export { default as MiniText } from './Inputs/MiniText';
 
 export { default as Sidebar } from './Sidebar/Sidebar';
+export { default as Navbar } from './Navbar/Navbar';
+
+export { default as Icon } from './icon/Icon';

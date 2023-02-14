@@ -133,21 +133,24 @@ ul {
     }
   }
 
+  // .root{
+  //   @apply relative;
+  // }
   // searchbar 
-  .searchbar{
-    @apply w-[75rem] max-w-[30rem] bg-white text-[#2B564C] capitalize flex flex-col px-[.8rem] h-[100vh];
+  .sidebar{
+    @apply w-[75rem] max-w-[30rem] bg-white text-[#2B564C] capitalize flex flex-col px-[.8rem] h-[100vh] py-[3rem] ;
     box-shadow: 0px -18px 4px rgba(146, 146, 146, 0.25);
 
     ul{
       @apply w-full flex flex-col gap-[1rem];
     }
     .nav-link{
-      @apply py-[1.7rem];
+      @apply py-[1.7rem] block rounded-[1.3rem];
       img{
         @apply w-[2.5rem] mx-[2rem];
       }
       span{
-@apply hidden md:visible lg:text-[2rem]
+        @apply hidden md:visible lg:text-[2rem]
       }
     }
   }
