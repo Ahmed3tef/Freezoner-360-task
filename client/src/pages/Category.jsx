@@ -4,7 +4,9 @@ import { loadCategory } from '../store/reducers/category'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
+
 const Category = () => {
+  localStorage.removeItem('suggestionId')
 
   const dispatch = useDispatch()
 
@@ -14,7 +16,10 @@ const Category = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
-    dispatch(loadCategory({ id }));
+    if (id) {
+      localStorage.setItem('categoryId', id);
+      dispatch(loadCategory({ id }));
+    }
   }, []);
 
   return (

@@ -6,6 +6,12 @@ const SuggestionCard = ({ data, categoryName }) => {
 
   const navigate = useNavigate();
 
+  const handleNavigation = () => {
+    localStorage.setItem('suggestionId', data._id);
+    console.log(data._id);
+    navigate(`/suggestion/${data._id}`);
+  }
+
   return (
     <div className='suggestion-card'>
       <div className="text">
@@ -14,7 +20,7 @@ const SuggestionCard = ({ data, categoryName }) => {
       </div>
       <div className="cta">
         <button type="button" className="details"
-        // onClick={() => navigate(`/suggestion/${data._id}`)}
+          onClick={handleNavigation}
         >
           View Details
         </button>

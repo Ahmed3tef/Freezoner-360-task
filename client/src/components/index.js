@@ -22,3 +22,5 @@ export { default as SuggestionForm } from './Forms/SuggestionForm';
 // inputs 
 export { default as LargeText } from './Inputs/LargeText';
 export { default as MiniText } from './Inputs/MiniText';
+
+export { default as Sidebar } from './Sidebar/Sidebar';

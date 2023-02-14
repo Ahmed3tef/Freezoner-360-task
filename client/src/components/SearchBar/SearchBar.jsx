@@ -11,6 +11,8 @@ const SearchBar = (props) => {
   };
   const onFlySearch = e => {
     props.setSearchValue(e.target.value)
+    console.log(props.searchValue);
+    console.log(e.target.value);
     if (e.target.value?.length > 3) props.handleSearch()
 
   }

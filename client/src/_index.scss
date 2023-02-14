@@ -133,6 +133,25 @@ ul {
     }
   }
 
+  // searchbar 
+  .searchbar{
+    @apply w-[75rem] max-w-[30rem] bg-white text-[#2B564C] capitalize flex flex-col px-[.8rem] h-[100vh];
+    box-shadow: 0px -18px 4px rgba(146, 146, 146, 0.25);
+
+    ul{
+      @apply w-full flex flex-col gap-[1rem];
+    }
+    .nav-link{
+      @apply py-[1.7rem];
+      img{
+        @apply w-[2.5rem] mx-[2rem];
+      }
+      span{
+@apply hidden md:visible lg:text-[2rem]
+      }
+    }
+  }
+
   // search-bar
   .search {
     @apply flex-center w-[30%] justify-start gap-[2rem] rounded-[.8rem] px-[2rem] py-[1.8rem] text-[1.5rem] text-gray-dark flex-1  max-w-[40rem];

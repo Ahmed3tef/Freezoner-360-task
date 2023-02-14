@@ -67,7 +67,8 @@ const ReferenceForm = () => {
       if (!file) return false;
 
       if (file) {
-        const categoryId = location.state.categoryId;
+
+        const categoryId = localStorage.getItem('categoryId')
 
 
         const fd = new FormData();

@@ -9,23 +9,27 @@ import {
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ReferenceForm, SuggestionForm } from './components';
+import { ReferenceForm, Sidebar, SuggestionForm } from './components';
 
 const App = () => {
   return (
     <>
       {/* <Navbar /> */}
+      <Sidebar />
       <main>
         <Routes>
           <Route path="/" element={<Categories />} />
-          <Route path="/category/:id" element={<Category />} />
-          <Route path="/reference" element={<ReferenceForm />} >
-            {/* to edit */}
-            <Route path=":id" element={<ReferenceForm />} />
-          </Route>
-          <Route path="/suggestion" element={<SuggestionForm />} >
-            {/* to edit */}
-            <Route path=":id" element={<SuggestionForm />} />
+          <Route path='/references' element={<Categories />}>
+
+            <Route path="category/:id" element={<Category />} />
+            <Route path="reference" element={<ReferenceForm />} >
+              {/* to edit */}
+              <Route path=":id" element={<ReferenceForm />} />
+            </Route>
+            <Route path="suggestion" element={<SuggestionForm />} >
+              {/* to edit */}
+              <Route path=":id" element={<SuggestionForm />} />
+            </Route>
           </Route>
         </Routes>
 
