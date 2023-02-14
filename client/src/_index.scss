@@ -135,7 +135,7 @@ ul {
 
   // search-bar
   .search {
-    @apply flex-center w-[50%] justify-start gap-[2rem] rounded-[.8rem] px-[2rem] py-[1.8rem] text-[1.5rem] text-gray-dark flex-1  max-w-[40%];
+    @apply flex-center w-[30%] justify-start gap-[2rem] rounded-[.8rem] px-[2rem] py-[1.8rem] text-[1.5rem] text-gray-dark flex-1  max-w-[40rem];
     background: rgba(197, 197, 197, 0.19);
 
     input {
@@ -245,7 +245,7 @@ ul {
       @apply text-[2.4rem] font-bold;
     }
     .meta-data{
-      @apply text-gold-dark flex gap-[4rem];
+      @apply text-gold-dark flex gap-[4rem] text-[1.7rem] ;
     }
   }
   .code{

@@ -9,6 +9,11 @@ const SearchBar = (props) => {
       props.handleSearch()
     }
   };
+  const onFlySearch = e => {
+    props.setSearchValue(e.target.value)
+    if (e.target.value?.length > 3) props.handleSearch()
+
+  }
   return (
     <div className="search">
       <span className="search-icon"
@@ -18,10 +23,10 @@ const SearchBar = (props) => {
         <TfiSearch />
       </span>
       <input
-        placeholder="What Are You Looking For ?"
+        placeholder={props.placeholder ?? "What Are You Looking For ?"}
         type="text"
         value={props.searchValue}
-        onChange={e => props.setSearchValue(e.target.value)}
+        onChange={onFlySearch}
         onKeyDown={handleSearchOnEnter}
         tabIndex="0"
       />

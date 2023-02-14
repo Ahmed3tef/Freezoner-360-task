@@ -6,6 +6,8 @@ import { ErrorCard, MiniText, ReferenceCard, Spinner } from '..';
 import { loadReferences, loadSearchReferences } from '../../store/reducers/references';
 import { useNavigate } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
+import filterMenu from '../../assets/images/filter-menu.svg';
+
 const References = ({ categoryId }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate();
@@ -39,7 +41,7 @@ const References = ({ categoryId }) => {
 
       {!isLoading && !error && references && <div className='section'>
 
-        <div className="flex justify-between items-center mb-[2rem] ml-[4rem] mt-[2rem]">
+        <div className="flex justify-between items-center mb-[2rem] ml-[1rem] mt-[2rem]">
 
           <h2 className='section-title '>Prophetic Tradition References</h2>
           {/* 
@@ -49,15 +51,19 @@ const References = ({ categoryId }) => {
             <MiniText name={searchValue} inputName='search' placeholder='Word , Reference Code , Author' setName={setSearchValue} onKeyDown={handleSearchOnEnter} />
 
           </div> */}
-          <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} handleSearch={handleSearch} />
+          <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} handleSearch={handleSearch} placeholder={'Word , Reference Code , Author'} />
 
-          <div className="cta flex justify-end items-center">
+          <div className="cta flex justify-end items-center gap-[3rem]">
+            <button type="button" className="btn-alt-green  px-[4rem] py-[1.7rem]" onClick={() => navigate(`/reference/${data._id}`)}>
+              <img src={filterMenu} alt="filter menu" />
+              Filter by
+            </button>
             <button type="button" className="btn-green gap-[1rem]" onClick={() => navigate('/reference', {
               state: {
                 categoryId
               }
             })}>
-              <img src={plusIcon} alt="plus" />  Add Reference
+              <img src={plusIcon} alt="plus" />  Add New
             </button>
 
           </div>

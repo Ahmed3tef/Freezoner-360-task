@@ -36,19 +36,19 @@ const ReferenceForm = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    if (reference) setRefState(reference)
-  }, []);
+    if (reference && id) setRefState(reference)
+  }, [reference, id]);
 
 
 
   const formik = useFormik({
 
     initialValues: {
-      title: reference?.title ?? '',
-      description: reference?.description ?? '',
-      author: reference?.author ?? '',
-      reviewer: reference?.reviewer ?? '',
-      referenceCode: reference?.referenceCode ?? '',
+      title: refState?.title ?? '',
+      description: refState?.description ?? '',
+      author: refState?.author ?? '',
+      reviewer: refState?.reviewer ?? '',
+      referenceCode: refState?.referenceCode ?? '',
 
     },
     // validateOnMount: true,

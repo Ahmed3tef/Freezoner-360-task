@@ -16,7 +16,7 @@ const Suggestions = ({ data, categoryName, categoryId }) => {
           <img src={plusIcon} alt="plus" /> Add suggestion
         </button>
       </div>
-      {data.map(e => <SuggestionCard data={e} key={e._id} categoryName={categoryName} />)}
+      {data.map(e => <SuggestionCard data={e} key={e._id} categoryName={categoryName} categoryId={categoryId} />)}
     </div>
   )
 }
