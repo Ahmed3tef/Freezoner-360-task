@@ -1,6 +1,6 @@
 import dashIcon from '../assets/images/dash-icon.svg';
 import decisionIcon from '../assets/images/PArtner Decision icon.svg';
-import docsIcon from '../assets/images/dash-icon.svg';
+import docsIcon from '../assets/images/Documents Icon.svg';
 import tasksIcon from '../assets/images/tasks-icon.svg';
 import refsIcon from '../assets/images/references-icon.svg';
 import meetingIcon from '../assets/images/meeting-icon.svg';
@@ -31,9 +31,5 @@ export const sidebarData = [
     link: 'references',
     icon: refsIcon
   },
-  {
-    link: 'meetings',
-    text: 'Create a Meeting',
-    icon: meetingIcon
-  },
+ 
 ]

@@ -32,20 +32,21 @@ const App = () => {
         <Sidebar showSidebar={showSidebar} />
         <main>
           <Routes>
-            <Route path="/references" element={<Categories />} >
+            <Route path="/" element={<Navigate to={'/references'} />} />
+            <Route path="/references" element={<Categories />} />
 
 
-              <Route path="category/:id" element={<Category />} />
-              <Route path="reference" element={<ReferenceForm />} >
-                {/* to edit */}
-                <Route path=":id" element={<ReferenceForm />} />
-              </Route>
-              <Route path="suggestion" element={<SuggestionForm />} >
-                {/* to edit */}
-                <Route path=":id" element={<SuggestionForm />} />
-
-              </Route>
+            <Route path="/category/:id" element={<Category />} />
+            <Route path="/reference" element={<ReferenceForm />} >
+              {/* to edit */}
+              <Route path=":id" element={<ReferenceForm />} />
             </Route>
+            <Route path="/suggestion" element={<SuggestionForm />} >
+              {/* to edit */}
+              <Route path=":id" element={<SuggestionForm />} />
+
+            </Route>
+
 
           </Routes>
 

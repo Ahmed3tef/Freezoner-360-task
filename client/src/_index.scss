@@ -31,7 +31,7 @@ body {
 }
 
 main {
-  @apply min-h-[80vh] mt-[10rem] container-mx;
+  @apply min-h-[80vh] mt-[2rem] container-mx;
 }
 
 a,
@@ -144,13 +144,16 @@ ul {
     ul{
       @apply w-full flex flex-col gap-[1rem];
     }
-    .nav-link{
-      @apply py-[1.7rem] block rounded-[1.3rem];
-      img{
-        @apply w-[2.5rem] mx-[2rem];
+    li{
+      @apply py-[1.7rem]  flex text-green-main rounded-[1.3rem] items-center cursor-pointer;
+      img,svg{
+        @apply w-[2.5rem] h-[2.5rem] mx-[2rem];
       }
       span{
-        @apply hidden md:visible lg:text-[2rem]
+        @apply hidden md:inline-block lg:text-[2rem]
+      }
+      &:last-child{
+        @apply text-white bg-green-main
       }
     }
   }
@@ -274,7 +277,28 @@ ul {
     @apply absolute top-0 left-0 bg-gold-dark text-white p-[1rem] px-[2rem] pr-[2.5rem] rounded-r-full; 
   }
 }
+.nav{
+  @apply sticky top-0 left-0 z-50 w-[100%] bg-white h-[12.5rem]  px-[2rem] flex items-center justify-between;
+  box-shadow: 0px 2px 4px rgba(204, 204, 204, 0.25);
+}
 
+.nav-user{
+  @apply flex items-center bg-green-main-darker rounded-full pr-[4rem] relative gap-[2rem] text-white; 
+  img{
+    @apply w-[6.5rem] h-[6.5rem] object-fill rounded-full border-2 border-white;
+  }
+  .user-info{
+
+    h3{
+      @apply text-[1.5rem] ;
+      font-weight: 600;
+    }
+    p{
+      @apply text-[1.4rem];
+      
+    }
+  }
+}
 }
 
 %form-input {

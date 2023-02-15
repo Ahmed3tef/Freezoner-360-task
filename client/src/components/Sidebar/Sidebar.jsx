@@ -7,15 +7,10 @@ const Sidebar = () => {
     <aside className='sidebar'>
       <ul>
         {sidebarData.map((e, i) => <li key={i}>
-          <NavLink to={`/${e.link}`} className='nav-link' style={isActive => ({
-            backgroundColor: isActive ? "#2B564C" : "#fff",
-            fill: isActive ? "white" : "#2B564C",
-            color: isActive ? "white" : "#2B564C",
 
-          })} >
-            <img src={e.icon} alt={e.text} />
-            <span>{e.text}</span>
-          </NavLink>
+          <img src={e.icon} className='fill-inherit text-white' />
+          <span>{e.text}</span>
+
         </li>)}
       </ul>
     </aside>

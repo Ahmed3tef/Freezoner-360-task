@@ -29,6 +29,7 @@ module.exports = {
         'gray-dark': '#484848',
         'green-main': '#2B564C',
         'green-main-hover': '#2e7a68',
+        'green-main-darker': '#375A52',
         'gold-dark': '#B7A160',
         'red-alert': '#FF0101',
       
