@@ -8,7 +8,7 @@ const SuggestionCard = ({ data, categoryName }) => {
 
   const handleNavigation = () => {
     localStorage.setItem('suggestionId', data._id);
-    console.log(data._id);
+    // console.log(data._id);
     navigate(`/suggestion/${data._id}`);
   }
 

@@ -50,7 +50,9 @@ const References = ({ categoryId }) => {
             <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} handleSearch={handleSearch} placeholder={'Word , Reference Code , Author'} />
 
             <div className="cta flex justify-end items-center gap-[3rem] ml-[1rem]">
-              <button type="button" className="btn-alt-green  px-[4rem] py-[1.7rem]" onClick={() => navigate(`/reference/${data._id}`)}>
+              <button type="button" className="btn-alt-green  px-[4rem] py-[1.7rem]"
+              // onClick={() => navigate(`/reference/${data._id}`)}
+              >
                 <img src={filterMenu} alt="filter menu" />
                 Filter by
               </button>

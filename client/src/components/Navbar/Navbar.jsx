@@ -27,7 +27,7 @@ const Navbar = ({ hideSidebarHandler }) => {
   return (
     <nav className='nav'>
 
-      <div className="mr-[4rem] flex items-center gap-[3rem]">
+      <div className="mr-[1rem] lg:mr-[4rem] flex items-center gap-[1rem] lg:gap-[3rem]">
 
         <img src={LogoImg} alt="logo" className="logo" />
         <Icon>
@@ -38,7 +38,7 @@ const Navbar = ({ hideSidebarHandler }) => {
       <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} handleSearch={handleSearch} placeholder={'Search'} />
 
 
-      <div className="flex gap-[4rem] items-center ml-auto">
+      <div className="flex gap-[1rem] lg:gap-[4rem] items-center ml-auto">
 
         <Icon>
 
