@@ -45,11 +45,11 @@ const References = ({ categoryId }) => {
 
           <h2 className='section-title '>Prophetic Tradition References</h2>
 
-          <div className="flex flex-1 justify-between">
+          <div className="flex flex-1 justify-between ">
 
             <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} handleSearch={handleSearch} placeholder={'Word , Reference Code , Author'} />
 
-            <div className="cta flex justify-end items-center gap-[3rem]">
+            <div className="cta flex justify-end items-center gap-[3rem] ml-[1rem]">
               <button type="button" className="btn-alt-green  px-[4rem] py-[1.7rem]" onClick={() => navigate(`/reference/${data._id}`)}>
                 <img src={filterMenu} alt="filter menu" />
                 Filter by
